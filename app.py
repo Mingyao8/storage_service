@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'home/mingyao/flask_uploads'
+UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # 確保uploads資料夾存在
