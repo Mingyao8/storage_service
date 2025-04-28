@@ -5,5 +5,5 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - /home/flask_uploads:/app/uploads
+      - /home/mingyao/flask_uploads:/app/uploads
     container_name: flask-upload-container
