@@ -7,3 +7,4 @@ services:
     volumes:
       - /home/mingyao/flask_uploads:/app/uploads
     container_name: flask-upload-container
+    restart: unless-stopped
