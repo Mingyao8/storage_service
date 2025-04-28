@@ -1,0 +1,9 @@
+version: '3'
+services:
+  flask-upload:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - /home/ubuntu/flask_uploads:/app/uploads
+    container_name: flask-upload-container
