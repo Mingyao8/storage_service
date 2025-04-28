@@ -4,7 +4,7 @@ import shutil
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = '/home/ubuntu/flask_uploads'  # 檔案存放的資料夾
+UPLOAD_FOLDER = '/home/mingyao/flask_uploads'  # 檔案存放的資料夾
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'txt', 'jpg', 'png'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
