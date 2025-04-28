@@ -1,36 +1,33 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, redirect, url_for
 import os
 
 app = Flask(__name__)
-
-# 設定上傳資料夾
 UPLOAD_FOLDER = './uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# 允許上傳的檔案副檔名
-ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'txt', 'png', 'jpg'}
+# 確保uploads資料夾存在
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/upload', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-    if file and allowed_file(file.filename):
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(filepath)
-        return jsonify({'message': 'File uploaded successfully'}), 200
-    else:
-        return jsonify({'error': 'File type not allowed'}), 400
+    if request.method == 'POST':
+        file = request.files['file']
+        if file:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(filepath)
+            return redirect(url_for('file_list'))
+    return render_template('upload.html')
 
-@app.route('/', methods=['GET'])
-def home():
-    return "Welcome to File Uploader Service!", 200
+@app.route('/files')
+def file_list():
+    # 讀取uploads資料夾中的所有檔案
+    files = os.listdir(UPLOAD_FOLDER)
+    return render_template('file_list.html', files=files)
+
+@app.route('/files/<filename>')
+def download_file(filename):
+    return redirect(url_for('static', filename=os.path.join('uploads', filename)))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
