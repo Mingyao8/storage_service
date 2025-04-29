@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ def upload_file():
     if request.method == 'POST':
         file = request.files['file']
         if file:
+            # 儲存檔案至uploads資料夾
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filepath)
             return redirect(url_for('file_list'))
@@ -27,7 +28,8 @@ def file_list():
 
 @app.route('/files/<filename>')
 def download_file(filename):
-    return redirect(url_for('static', filename=os.path.join('uploads', filename)))
+    # 提供下載檔案的功能
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
