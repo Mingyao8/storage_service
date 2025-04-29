@@ -71,21 +71,6 @@
 <body>
     <h1>檔案管理中心</h1>
     <div class="container">
-        <!-- 按鈕區域 -->
-        <div class="button-container">
-            <form action="/" method="POST" enctype="multipart/form-data">
-                <label for="file-upload" style="cursor: pointer; padding: 10px 20px; background-color: #28a745; color: white; border-radius: 5px;">上傳檔案</label>
-                <input type="file" name="file" id="file-upload" style="display: none;" />
-                <button type="submit" style="display: none;">上傳</button>
-            </form>
-            <a href="/files"><button>查看已上傳檔案</button></a>
-        </div>
-
-        <!-- 新增的跳轉到檔案列表按鈕 -->
-        <div class="button-container">
-            <a href="/files"><button>查看所有檔案</button></a>
-        </div>
-
         <!-- 檔案列表 -->
         <h2>目前已上傳的檔案</h2>
         <table>
