@@ -1,62 +1,34 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>上傳你的檔案</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f8fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>檔案上傳</title>
+    <script>
+        // 這段代碼用來顯示 Flash 訊息
+        window.onload = function() {
+            var messages = document.getElementsByClassName('flash-message');
+            if (messages.length > 0) {
+                alert(messages[0].textContent);
+            }
         }
-        .upload-box {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .upload-box h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .file-input {
-            margin: 20px 0;
-        }
-        input[type="file"] {
-            padding: 10px;
-            background: #e9ecef;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            width: 100%;
-        }
-        button {
-            margin-top: 20px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    </script>
 </head>
 <body>
-<div class="upload-box">
-    <h2>上傳檔案</h2>
+    <h1>上傳檔案</h1>
+
+    <!-- 顯示 flash 訊息 -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- 檔案上傳表單 -->
     <form method="POST" enctype="multipart/form-data">
-        <div class="file-input">
-            <input type="file" name="file" required>
-        </div>
+        <input type="file" name="file" required>
         <button type="submit">上傳</button>
     </form>
-</div>
+
 </body>
 </html>
