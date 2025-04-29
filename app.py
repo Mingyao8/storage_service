@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, flash, redirect, url_for
+from flask import Flask, request, render_template, flash, redirect, url_for, send_from_directory
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # 這是為了使用 flash() 訊息，請確保設定 secret_key
@@ -27,7 +27,7 @@ def file_list():
 @app.route('/files/<filename>')
 def download_file(filename):
     # 提供下載檔案的功能
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
