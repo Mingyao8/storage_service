@@ -11,14 +11,15 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
+    if request.method == "POST":
+        file = request.files.get('file')
         if file:
-            # 儲存檔案至uploads資料夾
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filepath)
-            return redirect(url_for('file_list'))
-    return render_template('upload.html')
+            # 處理檔案
+            file.save(f"./uploads/{file.filename}")  # 假設存到本地的 uploads 資料夾
+            flash('檔案上傳成功！')  # 顯示上傳成功訊息
+            return redirect(url_for('upload_file'))  # 上傳成功後，重定向回該頁面
+
+    return render_template("index.html")  # 這會渲染一個 HTML 表單
 
 @app.route('/files')
 def file_list():
